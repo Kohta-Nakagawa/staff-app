@@ -27,7 +27,6 @@
 
 <script>
 import firebase from "~/plugins/firebase";
-
 export default {
   data() {
     return {
@@ -50,6 +49,13 @@ export default {
       //   this.$router.push("/");
       // }
     }
+    // login() {
+    //   firebase
+    //     .auth()
+    //     .signInWithEmailAndPassword(this.email, this.password)
+    //     .then(user => this.$router.push("/"))
+    //     .catch(e => alert(e.message));
+    // }
   }
 };
 </script>

@@ -29,6 +29,7 @@ export const actions = {
           if (user) {
             commit("getData", { uid: user.uid, email: user.email });
             commit("switchLogin");
+            console.log(!user); //追加
           }
         });
       })

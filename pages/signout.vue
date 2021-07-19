@@ -1,5 +1,15 @@
-<template><p>sign out</p></template>
+<template>
+  <div>
+    <button @click="signout">sign out</button>
+  </div>
+</template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    signout() {
+      this.$store.dispatch("signout");
+    }
+  }
+};
 </script>

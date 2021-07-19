@@ -37,6 +37,17 @@ export const actions = {
         alert(error);
       });
   },
+  signout() {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch(error => {
+        // An error happened.
+      });
+  },
   addGame({ commit }, payload) {
     const game = {
       id: uuidv4(),

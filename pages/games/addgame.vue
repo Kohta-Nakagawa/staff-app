@@ -51,7 +51,6 @@ export default {
       game: {
         title: null,
         // img: null,
-
         memo: null
       }
     };

@@ -9,7 +9,8 @@
         <b-navbar-nav>
           <b-nav-item href="/games">games</b-nav-item>
           <b-nav-item href="/games/addgame">ゲームを追加</b-nav-item>
-          <b-nav-item href="/mypage">Profile</b-nav-item>
+          <b-nav-item href="/user">Profile</b-nav-item>
+          <b-nav-item href="/user/create">add user</b-nav-item>
           <b-nav-item href="/signin">Sign in</b-nav-item>
           <b-nav-item href="/signout">Sign Out</b-nav-item>
         </b-navbar-nav>

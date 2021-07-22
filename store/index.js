@@ -3,12 +3,16 @@ import firebase from "~/plugins/firebase";
 
 const db = firebase.firestore();
 const gamesRef = db.collection("games");
+const usersRef = db.collection("users");
 
 export const state = () => ({
+  users: [],
   user: {
     uid: "",
     email: "",
-    login: false
+    login: false,
+    userName: null,
+    instGame: []
   },
   games: [],
   game: {
@@ -48,13 +52,49 @@ export const actions = {
         // An error happened.
       });
   },
+  fetchUsers({ commit }) {
+    commit("initUsers");
+
+    return new Promise((resolve, reject) => {
+      gamesRef
+        .orderBy("created_at", "desc")
+        .get()
+        .then(res => {
+          res.forEach(doc => {
+            commit("addUsers", doc.data());
+            resolve(true);
+          });
+        })
+        .catch(error => {
+          console.error("An error occurred in fetchUsers(): ", error);
+          reject(error);
+        });
+    });
+  },
+  addUser({ commit }, payload) {
+    const user = {
+      uid: payload.user.uid,
+      name: payload.user.name,
+      updated_at: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    return new Promise((resolve, reject) => {
+      usersRef
+        .add(user)
+        .then(ref => {
+          resolve(true);
+        })
+        .catch(error => {
+          console.error("An error occurred in adduser(): ", error);
+          reject(error);
+        });
+    });
+  },
   addGame({ commit }, payload) {
     const game = {
       id: uuidv4(),
       title: payload.game.title,
       memo: payload.game.memo,
-      instStaff: [],
-      justInst: [],
       playCount: 0,
       created_at: firebase.firestore.FieldValue.serverTimestamp(),
       updated_at: firebase.firestore.FieldValue.serverTimestamp()
@@ -167,10 +207,12 @@ export const mutations = {
   switchLogin(state) {
     state.user.login = true;
   },
+  initUsers(state) {
+    state.users = [];
+  },
   initGames(state) {
     state.games = [];
   },
-
   addGames(state, games) {
     state.games.push(games);
   },
@@ -180,6 +222,9 @@ export const mutations = {
 };
 
 export const getters = {
+  users: state => {
+    return state.users;
+  },
   user: state => {
     return state.user;
   },

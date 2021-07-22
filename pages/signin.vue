@@ -45,17 +45,7 @@ export default {
         email: this.email,
         password: this.password
       });
-      // if (this.$store.getters["user"]) {
-      //   this.$router.push("/");
-      // }
     }
-    // login() {
-    //   firebase
-    //     .auth()
-    //     .signInWithEmailAndPassword(this.email, this.password)
-    //     .then(user => this.$router.push("/"))
-    //     .catch(e => alert(e.message));
-    // }
   }
 };
 </script>

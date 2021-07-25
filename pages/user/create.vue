@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ user }}}
+    {{ user }} {{ gotuser.uid }}
     <b-form @submit.prevent="addUser">
       <div class="container mt-5">
         <div class="row justify-content-center mb-3">
@@ -34,22 +34,20 @@
 
 <script>
 export default {
-  // data() {
-  //   return {
-  //     user: {
-  //       uid: "",
-  //       email: "",
-  //       login: false,
-  //       userName: null,
-  //       instGame: []
-  //     }
-  //   };
-  // },
-  // created() {
-  //   this.$store.dispatch("fetchUsers");
-  // },
+  data() {
+    return {
+      user: {
+        uid: "",
+        // uid: "gotuser.uid", ←これを入れたいです。
+        email: "",
+        login: false,
+        userName: null,
+        instGame: []
+      }
+    };
+  },
   computed: {
-    user() {
+    gotuser() {
       return this.$store.getters["user"];
     }
   },

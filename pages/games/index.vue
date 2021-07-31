@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ $store.getters.getUsers }}
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12">
@@ -25,11 +26,16 @@
           {{ game.memo }}
         </div>
         <div class="col-2">
+          <button>×</button>
+        </div>
+        <div class="col-1">
           <nuxt-link :to="{ name: 'games-edit-id', params: { id: game.id } }">
             Edit
           </nuxt-link>
         </div>
-        <a href="#" @click.prevent="deleteGame(game.id)">削除</a>
+        <div class="col-1">
+          <a href="#" @click.prevent="deleteGame(game.id)">削除</a>
+        </div>
       </div>
     </div>
   </div>
@@ -39,6 +45,7 @@
 export default {
   created() {
     this.$store.dispatch("fetchGames");
+    this.$store.dispatch("fetchUsers");
   },
   methods: {
     deleteGame(id) {

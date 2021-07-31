@@ -1,6 +1,10 @@
 <template>
   <div>
-    {{ user }} {{ gotuser.uid }}
+    <button @click="setNickname">set test</button>
+    <div>user{{ userName }}</div>
+    <!-- <div>user2{{ user2 }}</div> -->
+    <div>getUser{{ getUser }}</div>
+
     <b-form @submit.prevent="addUser">
       <div class="container mt-5">
         <div class="row justify-content-center mb-3">
@@ -14,7 +18,7 @@
             <b-form-group label="name" label-for="name">
               <b-form-input
                 id="name"
-                v-model="user.name"
+                v-model="userName"
                 required
                 placeholder="ここにニックネームを入れてね"
               ></b-form-input>
@@ -36,29 +40,32 @@
 export default {
   data() {
     return {
-      user: {
-        uid: "",
-        // uid: "gotuser.uid", ←これを入れたいです。
-        email: "",
-        login: false,
-        userName: null,
-        instGame: []
-      }
+      userName: null
     };
   },
   computed: {
-    gotuser() {
+    getUser() {
       return this.$store.getters["user"];
     }
+    // user2: function() {
+    //   return { ...this.data, uid: this.getUser.uid };
+    // }
   },
   methods: {
     addUser() {
-      this.$store.dispatch("addUser", { user: this.user }).then(() => {
-        this.user.name = null;
-        this.user.age = null;
-
+      const userData = {
+        uid: this.getUser.uid,
+        email: this.getUser.email,
+        login: false,
+        userName: this.userName,
+        instGame: []
+      };
+      this.$store.dispatch("addUser", userData).then(() => {
         alert("Successfully created user");
       });
+    },
+    setNickname() {
+      this.$store.dispatch("setNickname", {});
     }
   }
 };

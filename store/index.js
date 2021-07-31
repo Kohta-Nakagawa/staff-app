@@ -54,10 +54,8 @@ export const actions = {
   },
   fetchUsers({ commit }) {
     commit("initUsers");
-
     return new Promise((resolve, reject) => {
-      gamesRef
-        .orderBy("created_at", "desc")
+      usersRef
         .get()
         .then(res => {
           res.forEach(doc => {
@@ -73,8 +71,10 @@ export const actions = {
   },
   addUser({ commit }, payload) {
     const user = {
-      uid: payload.user.uid,
-      name: payload.user.name,
+      uid: payload.uid,
+      email: payload.email,
+      userName: payload.userName,
+      instGame: [],
       updated_at: firebase.firestore.FieldValue.serverTimestamp()
     };
 
@@ -210,6 +210,10 @@ export const mutations = {
   initUsers(state) {
     state.users = [];
   },
+  addUsers(state, users) {
+    state.users.push(users);
+    console.log("pushed");
+  },
   initGames(state) {
     state.games = [];
   },
@@ -222,10 +226,10 @@ export const mutations = {
 };
 
 export const getters = {
-  users: state => {
+  getUsers: state => {
     return state.users;
   },
-  user: state => {
+  getUser: state => {
     return state.user;
   },
   getGames(state) {

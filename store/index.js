@@ -163,8 +163,8 @@ export const actions = {
   },
   addInstGame({ commit }, payload) {
     return new Promise((resolve, reject) => {
-      gamesRef
-        .where("uid", "==", state.users.uid)
+      usersRef
+        .where("uid", "==", state.user.uid)
         .get()
         .then(snapshot => {
           snapshot.forEach(doc => {

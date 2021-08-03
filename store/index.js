@@ -161,6 +161,27 @@ export const actions = {
         });
     });
   },
+  addInstGame({ commit }, payload) {
+    return new Promise((resolve, reject) => {
+      gamesRef
+        .where("uid", "==", state.users.uid)
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            usersRef
+              .doc(doc.id)
+              .set({ instGame: payload.id })
+              .then(ref => {
+                resolve(true);
+              })
+              .catch(error => {
+                console.error("An error occurred in deleteGame(): ", error);
+                reject(error);
+              });
+          });
+        });
+    });
+  },
   fetchGames({ commit }) {
     commit("initGames");
 

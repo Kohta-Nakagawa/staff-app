@@ -26,7 +26,7 @@
           {{ game.memo }}
         </div>
         <div class="col-2">
-          <button>×</button>
+          <button @click.prevent="addInstGame(game.id)">×</button>
         </div>
         <div class="col-1">
           <nuxt-link :to="{ name: 'games-edit-id', params: { id: game.id } }">
@@ -52,6 +52,13 @@ export default {
       if (!confirm("ほんとに消す?")) return;
 
       this.$store.dispatch("deleteGame", { id }).then(() => {
+        setTimeout(() => {
+          this.$store.dispatch("fetchGames");
+        }, 1000);
+      });
+    },
+    addInstGame(id) {
+      this.$store.dispatch("addInstGame", { id }).then(() => {
         setTimeout(() => {
           this.$store.dispatch("fetchGames");
         }, 1000);

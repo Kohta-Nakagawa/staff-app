@@ -1,9 +1,9 @@
 <template>
   <div>
-    <button @click="setNickname">set test</button>
     <div>user{{ userName }}</div>
     <!-- <div>user2{{ user2 }}</div> -->
     <div>getUser{{ getUser }}</div>
+    <!-- <div>user{{ user }}</div> -->
 
     <b-form @submit.prevent="addUser">
       <div class="container mt-5">
@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     getUser() {
-      return this.$store.getters["user"];
+      return this.$store.getters["getUser"];
     }
     // user2: function() {
     //   return { ...this.data, uid: this.getUser.uid };
@@ -63,9 +63,6 @@ export default {
       this.$store.dispatch("addUser", userData).then(() => {
         alert("Successfully created user");
       });
-    },
-    setNickname() {
-      this.$store.dispatch("setNickname", {});
     }
   }
 };

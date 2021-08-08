@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p v-if="user.login">
+    <p v-if="getUser.login">
       <span>ログインに成功！</span>
-      {{ user }}
+      {{ getUser }}
     </p>
     <p v-else>ログインしてないよ</p>
     <form class="form" @submit.prevent>
@@ -35,8 +35,8 @@ export default {
     };
   },
   computed: {
-    user() {
-      return this.$store.getters["user"];
+    getUser() {
+      return this.$store.getters["getUser"];
     }
   },
   methods: {

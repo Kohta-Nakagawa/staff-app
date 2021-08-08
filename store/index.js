@@ -33,7 +33,7 @@ export const actions = {
           if (user) {
             commit("getData", { uid: user.uid, email: user.email });
             commit("switchLogin");
-            console.log(!user); //追加
+            console.log(user); //追加
           }
         });
       })
@@ -83,6 +83,7 @@ export const actions = {
         .add(user)
         .then(ref => {
           resolve(true);
+          commit("addUserName", payload.userName);
         })
         .catch(error => {
           console.error("An error occurred in adduser(): ", error);
@@ -161,7 +162,7 @@ export const actions = {
         });
     });
   },
-  addInstGame({ commit }, payload) {
+  addInstGame({ state, commit }, payload) {
     return new Promise((resolve, reject) => {
       usersRef
         .where("uid", "==", state.user.uid)
@@ -235,6 +236,10 @@ export const mutations = {
     state.users.push(users);
     console.log("pushed");
   },
+  addUserName(state, UserName) {
+    console.log(UserName);
+    state.user.userName = UserName;
+  },
   initGames(state) {
     state.games = [];
   },
@@ -247,10 +252,10 @@ export const mutations = {
 };
 
 export const getters = {
-  getUsers: state => {
+  getUsers(state) {
     return state.users;
   },
-  getUser: state => {
+  getUser(state) {
     return state.user;
   },
   getGames(state) {

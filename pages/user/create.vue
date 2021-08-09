@@ -1,6 +1,7 @@
 <template>
   <div>
     <div>user{{ userName }}</div>
+    <br />
     <!-- <div>user2{{ user2 }}</div> -->
     <div>getUser{{ getUser }}</div>
     <!-- <div>user{{ user }}</div> -->

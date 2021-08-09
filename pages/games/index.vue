@@ -1,6 +1,10 @@
 <template>
   <div>
-    {{ $store.getters.getUsers }}
+    {{ $store.getters.getUsers }}<br /><br />
+
+    {{ getUser.uid }}
+
+    {{ usersInstList }}
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12">
@@ -25,9 +29,11 @@
         <div class="col-4">
           {{ game.memo }}
         </div>
-        <div class="col-2">
-          <button @click.prevent="addInstGame(game.id)">×</button>
+        <div v-if="true" class="col-2">
+          インストできないよ
+          <button @click.prevent="addInstGame(game.id)">add</button>
         </div>
+        <div v-else>×</div>
         <div class="col-1">
           <nuxt-link :to="{ name: 'games-edit-id', params: { id: game.id } }">
             Edit
@@ -46,6 +52,21 @@ export default {
   created() {
     this.$store.dispatch("fetchGames");
     this.$store.dispatch("fetchUsers");
+  },
+  computed: {
+    getUser() {
+      return this.$store.getters["getUser"];
+    },
+    usersInstList() {
+      let userId = this.getUser.uid;
+      for (let i = 0; i < 2; i++) {
+        console.log(this.$store.getters.getUsers[i]);
+        console.log(this.$store.getters.getUsers[i].uid); //Cannot read property 'uid' of undefined になる
+        // if (this.$store.getters.getUsers[i].uid == userId) {
+        //   return this.$store.getters.getUsers[i].instGame;
+        // }
+      }
+    }
   },
   methods: {
     deleteGame(id) {

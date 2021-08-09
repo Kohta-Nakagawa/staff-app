@@ -171,7 +171,9 @@ export const actions = {
           snapshot.forEach(doc => {
             usersRef
               .doc(doc.id)
-              .set({ instGame: payload.id })
+              .update({
+                instGame: firebase.firestore.FieldValue.arrayUnion(payload.id)
+              })
               .then(ref => {
                 resolve(true);
               })

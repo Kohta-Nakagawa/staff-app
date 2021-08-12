@@ -1,9 +1,6 @@
 <template>
   <div>
-    {{ $store.getters.getUsers }}<br /><br />
-
-    {{ getUser.uid }}
-
+    <div>userinstlist</div>
     {{ usersInstList }}
     <div class="container">
       <div class="row justify-content-center">
@@ -27,13 +24,14 @@
           {{ game.title }}
         </div>
         <div class="col-4">
-          {{ game.memo }}
+          {{ game.id }}
         </div>
-        <div v-if="true" class="col-2">
-          インストできないよ
+        <div v-if="usersInstList.includes(game.id)" class="col-2">
+          <button @click.prevent="delInstGame(game.id)">del</button>
+        </div>
+        <div v-else>
           <button @click.prevent="addInstGame(game.id)">add</button>
         </div>
-        <div v-else>×</div>
         <div class="col-1">
           <nuxt-link :to="{ name: 'games-edit-id', params: { id: game.id } }">
             Edit
@@ -59,19 +57,19 @@ export default {
     },
     usersInstList() {
       let userId = this.getUser.uid;
-      for (let i = 0; i < 2; i++) {
+      for (let i = 0; i < this.$store.getters.getUsers.length; i++) {
         console.log(this.$store.getters.getUsers[i]);
         console.log(this.$store.getters.getUsers[i].uid); //Cannot read property 'uid' of undefined になる
-        // if (this.$store.getters.getUsers[i].uid == userId) {
-        //   return this.$store.getters.getUsers[i].instGame;
-        // }
+        if (this.$store.getters.getUsers[i].uid == userId) {
+          return this.$store.getters.getUsers[i].instGame;
+        }
       }
+      // なにも見つからなくても空配列を返す
+      return [];
     }
   },
   methods: {
     deleteGame(id) {
-      if (!confirm("ほんとに消す?")) return;
-
       this.$store.dispatch("deleteGame", { id }).then(() => {
         setTimeout(() => {
           this.$store.dispatch("fetchGames");
@@ -80,6 +78,13 @@ export default {
     },
     addInstGame(id) {
       this.$store.dispatch("addInstGame", { id }).then(() => {
+        setTimeout(() => {
+          this.$store.dispatch("fetchGames");
+        }, 1000);
+      });
+    },
+    delInstGame(id) {
+      this.$store.dispatch("delInstGame", { id }).then(() => {
         setTimeout(() => {
           this.$store.dispatch("fetchGames");
         }, 1000);

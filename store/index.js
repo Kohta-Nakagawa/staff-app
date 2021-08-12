@@ -28,12 +28,10 @@ export const actions = {
       .auth()
       .signInWithEmailAndPassword(payload.email, payload.password)
       .then(user => {
-        console.log("成功！");
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
             commit("getData", { uid: user.uid, email: user.email });
             commit("switchLogin");
-            console.log(user); //追加
           }
         });
       })
@@ -185,6 +183,29 @@ export const actions = {
         });
     });
   },
+  delInstGame({ state, commit }, payload) {
+    return new Promise((resolve, reject) => {
+      usersRef
+        .where("uid", "==", state.user.uid)
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            usersRef
+              .doc(doc.id)
+              .update({
+                instGame: firebase.firestore.FieldValue.arrayRemove(payload.id)
+              })
+              .then(ref => {
+                resolve(true);
+              })
+              .catch(error => {
+                console.error("An error occurred in deleteGame(): ", error);
+                reject(error);
+              });
+          });
+        });
+    });
+  },
   fetchGames({ commit }) {
     commit("initGames");
 
@@ -236,10 +257,8 @@ export const mutations = {
   },
   addUsers(state, users) {
     state.users.push(users);
-    console.log("pushed");
   },
   addUserName(state, UserName) {
-    console.log(UserName);
     state.user.userName = UserName;
   },
   initGames(state) {

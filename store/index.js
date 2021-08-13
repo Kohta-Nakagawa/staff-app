@@ -208,7 +208,6 @@ export const actions = {
   },
   fetchGames({ commit }) {
     commit("initGames");
-
     return new Promise((resolve, reject) => {
       gamesRef
         .orderBy("created_at", "desc")
@@ -270,6 +269,16 @@ export const mutations = {
   addGame(state, game) {
     state.game = game;
   }
+  // addList(state, game) {
+  //   console.log("addList呼ばれてる");
+  //   console.log(game);
+  //   state.user.instGame.unshift(game);
+  //   console.log(state.user.instGame);
+  // },
+  // delList(state, game) {
+  //   var index = state.user.instGame.indexOf(game);
+  //   state.user.instGame.splice(index, 1);
+  // }
 };
 
 export const getters = {

@@ -79,14 +79,14 @@ export default {
     addInstGame(id) {
       this.$store.dispatch("addInstGame", { id }).then(() => {
         setTimeout(() => {
-          this.$store.dispatch("fetchGames");
+          this.$store.dispatch("fetchUsers");
         }, 1000);
       });
     },
     delInstGame(id) {
       this.$store.dispatch("delInstGame", { id }).then(() => {
         setTimeout(() => {
-          this.$store.dispatch("fetchGames");
+          this.$store.dispatch("fetchUsers");
         }, 1000);
       });
     }

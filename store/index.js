@@ -119,6 +119,7 @@ export const actions = {
         .then(snapshot => {
           snapshot.forEach(doc => {
             const game = {
+              id: uuidv4(),
               title: payload.game.title,
               memo: payload.game.memo,
               updated_at: firebase.firestore.FieldValue.serverTimestamp()
@@ -258,7 +259,6 @@ export const mutations = {
   },
   addUserName(state, UserName) {
     state.user.userName = UserName;
-    console.log(UserName);
   },
   initGames(state) {
     state.games = [];

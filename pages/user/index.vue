@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ user }}
     <div v-for="(user, key) in $store.getters.getUsers" :key="key" class="row">
       <div class="col-4">
         {{ user.uid }}

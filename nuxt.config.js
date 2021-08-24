@@ -37,11 +37,12 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-  // generate: {
-  //   dir: "public"
-  // },
+  generate: {
+    dir: "public"
+  },
   // router
   router: {
     middleware: ["auth"]
-  }
+  },
+  target: "static"
 };

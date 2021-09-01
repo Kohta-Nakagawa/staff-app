@@ -30,7 +30,11 @@ export const actions = {
       .then(user => {
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
-            commit("getData", { uid: user.uid, email: user.email });
+            commit("getData", {
+              uid: user.uid,
+              email: user.email
+              // userName: user.userName
+            });
             commit("switchLogin");
           }
         });
@@ -246,6 +250,7 @@ export const mutations = {
   getData(state, payload) {
     state.user.uid = payload.uid;
     state.user.email = payload.email;
+    state.user.userName = payload.userName;
   },
   switchLogin(state) {
     state.user.login = true;
@@ -253,12 +258,20 @@ export const mutations = {
   initUsers(state) {
     state.users = [];
   },
+  initUser(state) {
+    state.user = {
+      uid: "",
+      email: "",
+      login: false,
+      userName: null,
+      instGame: []
+    };
+  },
   addUsers(state, users) {
     state.users.push(users);
   },
   addUserName(state, UserName) {
     state.user.userName = UserName;
-    console.log(UserName);
   },
   initGames(state) {
     state.games = [];
@@ -269,16 +282,6 @@ export const mutations = {
   addGame(state, game) {
     state.game = game;
   }
-  // addList(state, game) {
-  //   console.log("addList呼ばれてる");
-  //   console.log(game);
-  //   state.user.instGame.unshift(game);
-  //   console.log(state.user.instGame);
-  // },
-  // delList(state, game) {
-  //   var index = state.user.instGame.indexOf(game);
-  //   state.user.instGame.splice(index, 1);
-  // }
 };
 
 export const getters = {

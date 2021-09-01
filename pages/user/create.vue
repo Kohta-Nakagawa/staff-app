@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ getUser.userName === null }}
     <div v-if="getUser.userName === null">
       <b-form @submit.prevent="addUser">
         <div class="container mt-5">

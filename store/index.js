@@ -71,6 +71,26 @@ export const actions = {
         });
     });
   },
+  fetchLoginUser({ commit }) {
+    commit("initUser");
+    return new Promise((resolve, reject) => {
+      // let userId = (ここに現在ログイン中のuserIdを入れる)
+      usersRef
+        .get()
+        .then(res => {
+          res.forEach(doc => {
+            // doc.data()の中からuserIdが一致するもののみ、commitできるよう処理
+            // getters の　getUserでログインしているユーザーの情報を取得できるようになる
+            commit("addLoginUser", doc.data());
+            resolve(true);
+          });
+        })
+        .catch(error => {
+          console.error("An error occurred in fetchLoginUser(): ", error);
+          reject(error);
+        });
+    });
+  },
   addUser({ commit }, payload) {
     const user = {
       uid: payload.uid,
@@ -269,6 +289,9 @@ export const mutations = {
   },
   addUsers(state, users) {
     state.users.push(users);
+  },
+  addLoginUser(state, user) {
+    state.user.push(user);
   },
   addUserName(state, UserName) {
     state.user.userName = UserName;

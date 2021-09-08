@@ -1,17 +1,23 @@
 <template>
-  <div>
-    <div v-for="(user, key) in $store.getters.getUsers" :key="key" class="row">
-      <div class="col-4">
-        {{ user.uid }}
-      </div>
-      <div class="col-4">
-        {{ user.email }}
-      </div>
-      <div class="col-4">
-        {{ user.userName }}
-      </div>
-      <div class="col-4">
-        {{ user.instGame }}
+  <div class="container">
+    <div class="row mb-4 bg-light p-2">
+      <div
+        v-for="(user, key) in $store.getters.getUsers"
+        :key="key"
+        class="row"
+      >
+        <div class="col-4">
+          {{ user.uid }}
+        </div>
+        <div class="col-4">
+          {{ user.email }}
+        </div>
+        <div class="col-4">
+          {{ user.userName }}
+        </div>
+        <div class="col-4">
+          {{ user.instGame }}
+        </div>
       </div>
     </div>
   </div>

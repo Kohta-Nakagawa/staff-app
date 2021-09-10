@@ -71,48 +71,54 @@ export const actions = {
         });
     });
   },
-  fetchLoginUser({ commit }) {
-    commit("initUser");
+  setUser({ commit }) {
+    // commit("initUser");
     return new Promise((resolve, reject) => {
-      // let userId = (ここに現在ログイン中のuserIdを入れる)
-      usersRef
-        .get()
-        .then(res => {
-          res.forEach(doc => {
-            // doc.data()の中からuserIdが一致するもののみ、commitできるよう処理
-            // getters の　getUserでログインしているユーザーの情報を取得できるようになる
-            commit("addLoginUser", doc.data());
-            resolve(true);
-          });
-        })
-        .catch(error => {
-          console.error("An error occurred in fetchLoginUser(): ", error);
-          reject(error);
-        });
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          let currentUser = user.uid;
+          usersRef
+            .get()
+            .then(res => {
+              res.forEach(doc => {
+                if (doc.data().uid == currentUser) {
+                  commit("setUserData", doc.data());
+                  resolve(true);
+                }
+              });
+            })
+            .catch(error => {
+              console.error("An error occurred in setUser(): ", error);
+              reject(error);
+            });
+        } else {
+          console.log("uidはnull");
+        }
+      });
     });
   },
-  addUser({ commit }, payload) {
-    const user = {
-      uid: payload.uid,
-      email: payload.email,
-      userName: payload.userName,
-      instGame: [],
-      updated_at: firebase.firestore.FieldValue.serverTimestamp()
-    };
+  // addUser({ commit }, payload) {
+  //   const user = {
+  //     uid: payload.uid,
+  //     email: payload.email,
+  //     userName: payload.userName,
+  //     instGame: [],
+  //     updated_at: firebase.firestore.FieldValue.serverTimestamp()
+  //   };
 
-    return new Promise((resolve, reject) => {
-      usersRef
-        .add(user)
-        .then(ref => {
-          resolve(true);
-          commit("addUserName", payload.userName);
-        })
-        .catch(error => {
-          console.error("An error occurred in adduser(): ", error);
-          reject(error);
-        });
-    });
-  },
+  //   return new Promise((resolve, reject) => {
+  //     usersRef
+  //       .add(user)
+  //       .then(ref => {
+  //         resolve(true);
+  //         commit("addUserName", payload.userName);
+  //       })
+  //       .catch(error => {
+  //         console.error("An error occurred in adduser(): ", error);
+  //         reject(error);
+  //       });
+  //   });
+  // },
   addGame({ commit }, payload) {
     const game = {
       id: uuidv4(),
@@ -293,9 +299,13 @@ export const mutations = {
   addLoginUser(state, user) {
     state.user.push(user);
   },
-  addUserName(state, UserName) {
-    state.user.userName = UserName;
+  setUserData(state, userData) {
+    state.user.userName = userData.userName;
+    state.user.instGame = userData.instGame;
   },
+  // addUserName(state, UserName) {
+  //   state.user.userName = UserName;
+  // },
   initGames(state) {
     state.games = [];
   },

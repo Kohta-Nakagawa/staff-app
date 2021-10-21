@@ -1,0 +1,11 @@
+{
+  "name": "firestoreimportexport",
+  "version": "1.0.0",
+  "description": "supports csv import and export for firestore",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

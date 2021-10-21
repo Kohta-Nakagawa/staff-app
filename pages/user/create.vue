@@ -1,7 +1,8 @@
 <template>
   <div>
-    {{ getUser }}
-    <div v-if="getUser.userName === null">
+    <!-- {{ getUser }} -->
+    <!-- <div v-if="getUser.userName === null"> -->
+    <div>
       <b-form @submit.prevent="addUser">
         <div class="container mt-5">
           <div class="row justify-content-center mb-3">
@@ -31,9 +32,9 @@
         </div>
       </b-form>
     </div>
-    <div v-else>
+    <!-- <div v-else>
       名前は{{ getUser.userName }}で登録済だよ<br />名前を変更したい時は店長まで
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -42,7 +43,6 @@ export default {
   created() {
     this.$store.dispatch("fetchGames");
     this.$store.dispatch("fetchUsers");
-    // this.$store.dispatch("currentUser");
     this.$store.dispatch("setUser");
   },
   data() {

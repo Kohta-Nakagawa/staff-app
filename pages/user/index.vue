@@ -7,17 +7,9 @@
         class="row"
       >
         <div class="col-4">
-          {{ user.uid }}
-        </div>
-        <div class="col-4">
-          {{ user.email }}
-        </div>
-        <div class="col-4">
           {{ user.userName }}
         </div>
-        <div class="col-4">
-          {{ user.instGame }}
-        </div>
+        <div class="col-12">インストできる数：{{ user.instGame.length }}</div>
       </div>
     </div>
   </div>
@@ -37,6 +29,7 @@ export default {
   },
   created() {
     this.$store.dispatch("fetchUsers");
+    this.$store.dispatch("setUser");
   },
   computed: {
     user() {

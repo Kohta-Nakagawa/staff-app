@@ -27,7 +27,6 @@
               <b-form-input
                 id="memo"
                 v-model="game.memo"
-                required
                 placeholder="メモ"
               ></b-form-input>
             </b-form-group>
